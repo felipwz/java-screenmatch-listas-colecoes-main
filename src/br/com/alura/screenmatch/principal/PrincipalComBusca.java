@@ -1,5 +1,9 @@
 package br.com.alura.screenmatch.principal;
 
+import br.com.alura.screenmatch.modelos.Titulo;
+import br.com.alura.screenmatch.modelos.TituloOmdb;
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -13,17 +17,37 @@ public class PrincipalComBusca {
         Scanner leitura = new Scanner(System.in);
 
 
-        System.out.println("Escreva o nome de um filme para receber todas as informações dele!" +
-                "\nescreva aqui:");
-        String filme = leitura.nextLine();
+        System.out.println("Digite um filme para buscar: ");
+        var titulo = leitura.nextLine();
+
+        String chave = "d36763c0";
+        String endereco = "https://www.omdbapi.com/?t=" + titulo +"&apikey=" + chave;
 
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://www.omdbapi.com/?t="+ filme +"&apikey=d36763c0"))
+                .uri(URI.create(endereco))
                 .build();
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+
+        String json = response.body();
+        System.out.println(json);
+
+
+        Gson gson = new Gson();
+        //Titulo meuTitulo = gson.fromJson(json, Titulo.class);
+        TituloOmdb meuTituloOmdb = gson.fromJson(json, TituloOmdb.class);
+        System.out.println(meuTituloOmdb);
+
+
+
+
+
+
+
+
+
+
     }
 }
