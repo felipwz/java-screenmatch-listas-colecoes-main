@@ -5,9 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.time.Year;
 
 public class Titulo {
-    @SerializedName("Title")
     private String nome;
-    @SerializedName("Year")
     private int anoDeLancamento;
     private boolean incluidoNoPlano;
     private double somaDasAvaliacoes;
@@ -20,10 +18,16 @@ public class Titulo {
         this.anoDeLancamento = anoDeLancamento;
     }
 
+
     public Titulo(TituloOmdb meuTituloOmdb) {
         this.nome = meuTituloOmdb.title();
+
+       if (meuTituloOmdb.year().length() > 4){
+           System.out.printf("Não consegui converter o ano de lençamento, pois contêm mais contêm mais de 4 caracteres");
+       }
+
         this.anoDeLancamento = Integer.valueOf(meuTituloOmdb.year());
-        this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.runtime().substring(0, 3));
+        this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.runtime().substring(0, 2));
 
     }
 
