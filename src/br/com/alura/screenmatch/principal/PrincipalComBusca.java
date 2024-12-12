@@ -9,9 +9,11 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class PrincipalComBusca {
@@ -24,7 +26,8 @@ public class PrincipalComBusca {
         var titulo = leitura.nextLine();
 
         String chave = "d36763c0";
-        String endereco = "https://www.omdbapi.com/?t=" + titulo +"&apikey=" + chave;
+        String tituloCodificado = URLEncoder.encode(titulo, StandardCharsets.UTF_8);
+        String endereco = "https://www.omdbapi.com/?t=" + tituloCodificado +"&apikey=" + chave;
 
           try {
 
